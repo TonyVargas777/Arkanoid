@@ -96,6 +96,7 @@
 
       let touchX; // Variable para almacenar la posición inicial del toque en X
 
+
       function drawBall() {
         ctx.beginPath();
         ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
@@ -205,14 +206,7 @@
         }
         if (touchX && touchX > 0 && touchX < canvas.width) {
           // Si hay una posición de toque almacenada y está dentro del ancho del canvas
-          const halfPaddleWidth = paddleWidth / 2;
-          if (touchX < canvas.width / 2) {
-            // Si el toque está en la mitad izquierda del canvas, movemos la paleta hacia la izquierda
-            paddleX -= halfPaddleWidth;
-          } else {
-            // Si el toque está en la mitad derecha del canvas, movemos la paleta hacia la derecha
-            paddleX += halfPaddleWidth;
-          }
+          paddleX = touchX - paddleWidth / 2; // Movemos la paleta a la posición del toque menos la mitad de su ancho
         }
       }
 
@@ -243,30 +237,10 @@
             leftPressed = false;
           }
         }
-
-        // Agregar eventos de escucha para el toque en el canvas
-        canvas.addEventListener("touchstart", touchStartHandler);
-        canvas.addEventListener("touchmove", touchMoveHandler);
-        canvas.addEventListener("touchend", touchEndHandler);
-
-        function touchStartHandler(event) {
-          const touch = event.touches[0];
-          touchX = touch.clientX; // Almacenamos la posición inicial del toque en X
-          event.preventDefault(); // Prevenimos el comportamiento por defecto para evitar el desplazamiento de la pantalla
-        }
-
-        function touchMoveHandler(event) {
-          const touch = event.touches[0];
-          touchX = touch.clientX; // Actualizamos la posición del toque en X
-          event.preventDefault(); // Prevenimos el comportamiento por defecto para evitar el desplazamiento de la pantalla
-        }
-
-        function touchEndHandler() {
-          touchX = null; // Limpiamos la posición del toque cuando se levanta el dedo
-        }
       }
 
       function draw() {
+        console.log({ leftPressed, rightPressed });
         cleanCanvas();
         drawBall();
         drawPaddle();
