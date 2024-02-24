@@ -94,6 +94,9 @@
       let rightPressed = false;
       let leftPressed = false;
 
+      let touchX; // Variable para almacenar la posición inicial del toque en X
+
+
       function drawBall() {
         ctx.beginPath();
         ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
@@ -200,6 +203,10 @@
           paddleX += 7;
         } else if (leftPressed && paddleX > 0) {
           paddleX -= 7;
+        }
+        if (touchX && touchX > 0 && touchX < canvas.width) {
+          // Si hay una posición de toque almacenada y está dentro del ancho del canvas
+          paddleX = touchX - paddleWidth / 2; // Movemos la paleta a la posición del toque menos la mitad de su ancho
         }
       }
 
