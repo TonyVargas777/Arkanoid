@@ -21,8 +21,8 @@
         display: inline; /* Cambiado a display: inline */
         vertical-align: top; /* Alinear con la parte superior del canvas */
       }
-      img{
-        border: 4px white solid
+      img {
+        border: 4px white solid;
       }
     </style>
   </head>
@@ -30,7 +30,7 @@
     <img id="Arkanoid_Title" src="./arkanoid-logo.png" alt="Arkanoid" />
     <canvas></canvas>
     <img id="Arkanoid_Title" src="./Tonaco777.png" alt="Tonaco777" />
-    <br>
+    <br />
     <img id="Arkanoid_Title" src="./arkanoid-logo.png" alt="Arkanoid" />
     <img hidden id="sprite" src="./sprite.png" alt="sprite Arkanoid" />
     <img hidden id="bricks" src="./bricks.png" alt="bricks Arkanoid" />
@@ -201,13 +201,12 @@
       }
 
       function paddleMovement() {
-    if (rightPressed && paddleX < canvas.width - paddleWidth) {
-        paddleX += 7;
-    } else if (leftPressed && paddleX > 0) {
-        paddleX -= 7;
-    }
-}
-
+        if (rightPressed && paddleX < canvas.width - paddleWidth) {
+          paddleX += 7;
+        } else if (leftPressed && paddleX > 0) {
+          paddleX -= 7;
+        }
+      }
 
       function cleanCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -218,6 +217,8 @@
         document.addEventListener("keyup", keyUpHandler);
         canvas.addEventListener("touchstart", touchStartHandler);
         canvas.addEventListener("touchmove", touchMoveHandler);
+        canvas.addEventListener("touchend", touchEndHandler);
+
 
         function keyDownHandler(event) {
           const { key } = event;
@@ -240,26 +241,30 @@
         }
 
         function touchStartHandler(event) {
-  const touchX = event.touches[0].clientX;
-  if (touchX < canvas.width / 2) {
-    leftPressed = true;
-  } else {
-    rightPressed = true;
-  }
-}
+          const touchX = event.touches[0].clientX;
+          if (touchX < canvas.width / 2) {
+            leftPressed = true;
+          } else {
+            rightPressed = true;
+          }
+        }
 
-function touchMoveHandler(event) {
-  event.preventDefault(); // Prevent scrolling on touch devices
-  const touchX = event.touches[0].clientX;
-  if (touchX < canvas.width / 2) {
-    leftPressed = true;
-    rightPressed = false;
-  } else {
-    leftPressed = false;
-    rightPressed = true;
-  }
-}
+        function touchMoveHandler(event) {
+          event.preventDefault(); // Prevent scrolling on touch devices
+          const touchX = event.touches[0].clientX;
+          if (touchX < canvas.width / 2) {
+            leftPressed = true;
+            rightPressed = false; // Aseguramos que solo una dirección esté activa
+          } else if (touchX > canvas.width / 2) {
+            leftPressed = false; // Aseguramos que solo una dirección esté activa
+            rightPressed = true;
+          }
+        }
 
+        function touchEndHandler(event) {
+          leftPressed = false;
+          rightPressed = false;
+        }
       }
 
       function draw() {
