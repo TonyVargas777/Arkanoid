@@ -21,11 +21,16 @@
         display: inline; /* Cambiado a display: inline */
         vertical-align: top; /* Alinear con la parte superior del canvas */
       }
+      img{
+        border: 4px white solid
+      }
     </style>
   </head>
   <body>
     <img id="Arkanoid_Title" src="./arkanoid-logo.png" alt="Arkanoid" />
     <canvas></canvas>
+    <img id="Arkanoid_Title" src="./Tonaco777.png" alt="Tonaco777" />
+    <br>
     <img id="Arkanoid_Title" src="./arkanoid-logo.png" alt="Arkanoid" />
     <img hidden id="sprite" src="./sprite.png" alt="sprite Arkanoid" />
     <img hidden id="bricks" src="./bricks.png" alt="bricks Arkanoid" />
@@ -158,7 +163,7 @@
         }
         if (brickCount === 0) {
           alert(
-            "¡Felicidades! ¡Te has pasado el nivel de demo!\n \nRecuerda visitar las webs de los desarroladores:\n \nwww.TonyVargasDev.com\nwww.Github.com/TonyVargas777\n \nwww.midu.dev\nwww.Github.com/Midudev"
+            "¡Felicidades! ¡Te has pasado el nivel de demo de ARKANOID!\n \nRecuerda visitar las webs de los desarroladores:\n \nwww.TonyVargasDev.com\nwww.Github.com/TonyVargas777\n \nwww.midu.dev\nwww.Github.com/Midudev"
           );
           document.location.reload();
         }
@@ -196,12 +201,13 @@
       }
 
       function paddleMovement() {
-        if (rightPressed && paddleX < canvas.width - paddleWidth) {
-          paddleX += 7;
-        } else if (leftPressed && paddleX > 0) {
-          paddleX -= 7;
-        }        
-      }
+    if (rightPressed && paddleX < canvas.width - paddleWidth) {
+        paddleX += 7;
+    } else if (leftPressed && paddleX > 0) {
+        paddleX -= 7;
+    }
+}
+
 
       function cleanCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -210,6 +216,8 @@
       function initEvents() {
         document.addEventListener("keydown", keyDownHandler);
         document.addEventListener("keyup", keyUpHandler);
+        canvas.addEventListener("touchstart", touchStartHandler);
+        canvas.addEventListener("touchmove", touchMoveHandler);
 
         function keyDownHandler(event) {
           const { key } = event;
@@ -228,6 +236,27 @@
           }
           if (key === "Left" || key === "ArrowLeft") {
             leftPressed = false;
+          }
+        }
+
+        function touchStartHandler(event) {
+          const touchX = event.touches[0].clientX;
+          const touchY = event.touches[0].clientY;
+          if (touchX < canvas.width / 2) {
+            paddleMovement("left");
+          } else {
+            paddleMovement("right");
+          }
+        }
+
+        function touchMoveHandler(event) {
+          event.preventDefault(); // Prevent scrolling on touch devices
+          const touchX = event.touches[0].clientX;
+          const touchY = event.touches[0].clientY;
+          if (touchX < canvas.width / 2) {
+            paddleMovement("left");
+          } else {
+            paddleMovement("right");
           }
         }
       }
