@@ -191,7 +191,7 @@
         }
 
         //la pelota toca el suelo
-        if (y + dy > canvas.height) {
+        if (y + dy > canvas.height + 4) {
           console.log();
           ("GAME OVER");
           document.location.reload();
@@ -269,7 +269,7 @@
       }
 
       function draw() {
-        console.log({ leftPressed, rightPressed });
+        //console.log({ leftPressed, rightPressed });
         cleanCanvas();
         drawBall();
         drawPaddle();
