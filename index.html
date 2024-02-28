@@ -58,9 +58,11 @@
       //velocidad de la pelota
       let dx = 3;
       let dy = -3;
+
       //variables de la paleta
       const paddleHeight = 10;
       const paddleWidth = 48;
+
       //variables de los ladrillos
       const brickRowCount = 6;
       const brickColumnCount = 13;
@@ -70,7 +72,6 @@
       const brickOfSetTop = 80;
       const brickOfSetLeft = 16;
       const bricks = [];
-
       const BRICK_STATUS = {
         ACTIVE: 1,
         DESTROYED: 0,
@@ -99,6 +100,24 @@
 
       let rightPressed = false;
       let leftPressed = false;
+
+      function resetGame() {
+    // Restablecer la posición de la pelota
+    x = canvas.width / 2;
+    y = canvas.height - 30;
+    // Restablecer la velocidad de la pelota
+    dx = 3;
+    dy = -3;
+    // Restablecer el estado de los ladrillos
+    for (let c = 0; c < brickColumnCount; c++) {
+        for (let r = 0; r < brickRowCount; r++) {
+            bricks[c][r].status = BRICK_STATUS.ACTIVE;
+        }
+    }
+    // Restablecer la posición de la paleta
+    paddleX = (canvas.width - paddleWidth) / 2;
+    paddleY = canvas.height - paddleHeight - 10;
+}
 
       function drawBall() {
         ctx.beginPath();
@@ -166,7 +185,7 @@
           alert(
             "¡Felicidades! ¡Te has pasado el nivel de demo de ARKANOID!\n \nRecuerda visitar las webs de los desarroladores:\n \nwww.TonyVargasDev.com\nwww.Github.com/TonyVargas777\n \nwww.midu.dev\nwww.Github.com/Midudev"
           );
-          document.location.reload();
+          resetGame(); // Reiniciar el juego
         }
       }
 
@@ -194,7 +213,7 @@
         if (y + dy > canvas.height + 4) {
           console.log();
           ("GAME OVER");
-          document.location.reload();
+          resetGame(); // Reiniciar el juego
         }
 
         x += dx;
