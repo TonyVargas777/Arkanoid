@@ -184,6 +184,11 @@
             if (isBallSameXAsBrick && isBallSameYAsBrick) {
               dy = -dy;
               currentBrick.status = BRICK_STATUS.DESTROYED;
+            if (isBallSameXAsBrick && isBallSameYAsBrick) {
+        dy = -dy;
+        currentBrick.status = BRICK_STATUS.DESTROYED;
+        document.getElementById("brickSound").play(); // Reproducir sonido de ladrillo
+    }  
             }
           }
         }
