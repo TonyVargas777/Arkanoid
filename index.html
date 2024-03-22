@@ -19,8 +19,8 @@
         touch-action: none;
       }
       #Arkanoid_Title {
-        display: inline; /* Cambiado a display: inline */
-        vertical-align: top; /* Alinear con la parte superior del canvas */
+        display: inline;
+        vertical-align: top;
       }
       img {
         border: 4px white solid;
@@ -28,6 +28,12 @@
     </style>
   </head>
   <body>
+    <audio autoplay loop>
+      <source src="./tono_arkanoid_amstrad_cpc_1987.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="brickSound" src="sonido_ladrillo.mp3"></audio>
+    <audio id="paddleSound" src="sonido_paleta.mp3"></audio>
+
     <img id="Arkanoid_Title" src="./arkanoid-logo.png" alt="Arkanoid" />
     <canvas></canvas>
     <img id="Arkanoid_Title" src="./Tonaco777.png" alt="Tonaco777" />
@@ -102,22 +108,22 @@
       let leftPressed = false;
 
       function resetGame() {
-    // Restablecer la posición de la pelota
-    x = canvas.width / 2;
-    y = canvas.height - 30;
-    // Restablecer la velocidad de la pelota
-    dx = 3;
-    dy = -3;
-    // Restablecer el estado de los ladrillos
-    for (let c = 0; c < brickColumnCount; c++) {
-        for (let r = 0; r < brickRowCount; r++) {
+        // Restablecer la posición de la pelota
+        x = canvas.width / 2;
+        y = canvas.height - 30;
+        // Restablecer la velocidad de la pelota
+        dx = 3;
+        dy = -3;
+        // Restablecer el estado de los ladrillos
+        for (let c = 0; c < brickColumnCount; c++) {
+          for (let r = 0; r < brickRowCount; r++) {
             bricks[c][r].status = BRICK_STATUS.ACTIVE;
+          }
         }
-    }
-    // Restablecer la posición de la paleta
-    paddleX = (canvas.width - paddleWidth) / 2;
-    paddleY = canvas.height - paddleHeight - 10;
-}
+        // Restablecer la posición de la paleta
+        paddleX = (canvas.width - paddleWidth) / 2;
+        paddleY = canvas.height - paddleHeight - 10;
+      }
 
       function drawBall() {
         ctx.beginPath();
@@ -185,7 +191,7 @@
           alert(
             "¡Felicidades! ¡Te has pasado el nivel de demo de ARKANOID!\n \nRecuerda visitar las webs de los desarroladores:\n \nwww.TonyVargasDev.com\nwww.Github.com/TonyVargas777\n \nwww.midu.dev\nwww.Github.com/Midudev"
           );
-          setTimeout(resetGame,400); // Reiniciar el juego
+          setTimeout(resetGame, 400); // Reiniciar el juego
         }
       }
 
@@ -205,12 +211,12 @@
         if (isBallSameXAsPaddle && isBallTouchingPaddle) {
           dy = -dy;
         } else if (y + dy > canvas.height - ballRadius) {
-          setTimeout(resetGame,400)
+          setTimeout(resetGame, 400);
         }
 
         //la pelota toca el suelo
         if (y + dy > canvas.height + ballRadius) {
-          setTimeout(resetGame,400) 
+          setTimeout(resetGame, 400);
         }
 
         x += dx;
@@ -235,7 +241,6 @@
         canvas.addEventListener("touchstart", touchStartHandler);
         canvas.addEventListener("touchmove", touchMoveHandler);
         canvas.addEventListener("touchend", touchEndHandler);
-
 
         function keyDownHandler(event) {
           const { key } = event;
